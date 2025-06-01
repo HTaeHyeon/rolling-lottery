@@ -1,0 +1,48 @@
+{
+  "name": "rolling-lottery",
+  "version": "1.0.0",
+  "description": "웹 기반 롤링 추첨 프로그램 - 상품과 참가자를 설정하고 공정한 추첨을 진행할 수 있는 애플리케이션",
+  "type": "module",
+  "main": "src/main.jsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore --fix src",
+    "format": "prettier . --write",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "keywords": [
+    "prize-draw",
+    "lottery",
+    "random",
+    "rolling",
+    "web-app",
+    "react",
+    "vite"
+  ],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://htaehyeon.github.io/rolling-lottery/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HTaeHyeon/rolling-lottery.git"
+  },
+  "dependencies": {
+    "ci": "^2.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "gh-pages": "^6.1.1",
+    "live-server": "^1.2.2",
+    "prettier": "^3.4.2",
+    "serve": "^14.2.1",
+    "vite": "^6.0.5"
+  }
+}

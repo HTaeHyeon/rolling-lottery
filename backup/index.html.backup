@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>롤링 추첨 프로그램</title>
+    <meta name="description" content="공정한 롤링 추첨 프로그램으로 상품과 참가자를 설정하고 당첨자를 선정하세요.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- 네비게이션 -->
+        <nav class="nav">
+            <div class="nav-container">
+                <h1 class="nav-title">🎁 롤링 추첨</h1>
+                <div class="nav-buttons">
+                    <button id="settingsBtn" class="nav-btn">⚙️ 설정</button>
+                    <button id="startBtn" class="nav-btn primary">🎲 추첨 시작</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 메인 컨텐츠 -->
+        <main class="main">
+            <!-- 설정 페이지 -->
+            <section id="settingsPage" class="page active">
+                <div class="container">
+                    <h2>추첨 설정</h2>
+                    
+                    <!-- 상품 설정 -->
+                    <div class="settings-section">
+                        <h3>🎁 상품 설정</h3>
+                        <div class="input-group">
+                            <input type="text" id="prizeInput" placeholder="상품명을 입력하세요" maxlength="100">
+                            <button id="addPrizeBtn">추가</button>
+                        </div>
+                        <ul id="prizeList" class="item-list"></ul>
+                    </div>
+
+                    <!-- 참가자 설정 -->
+                    <div class="settings-section">
+                        <h3>👥 참가자 설정</h3>
+                        <div class="input-group">
+                            <input type="text" id="participantInput" placeholder="참가자명을 입력하세요" maxlength="50">
+                            <button id="addParticipantBtn">추가</button>
+                        </div>
+                        <ul id="participantList" class="item-list"></ul>
+                    </div>
+
+                    <!-- 외관 설정 -->
+                    <div class="settings-section">
+                        <h3>🎨 외관 설정</h3>
+                        <div class="appearance-settings">
+                            <div class="setting-item">
+                                <label for="bgColor">배경 색상:</label>
+                                <input type="color" id="bgColor" value="#1a1a2e">
+                            </div>
+                            <div class="setting-item">
+                                <label for="textColor">글자 색상:</label>
+                                <input type="color" id="textColor" value="#ffffff">
+                            </div>
+                            <div class="setting-item">
+                                <label for="accentColor">강조 색상:</label>
+                                <input type="color" id="accentColor" value="#0f3460">
+                            </div>
+                            <div class="setting-item">
+                                <label for="rollingSpeed">롤링 속도:</label>
+                                <input type="range" id="rollingSpeed" min="500" max="3000" value="1000">
+                                <span id="speedValue">1.0초</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 메시지 설정 -->
+                    <div class="settings-section">
+                        <h3>💬 메시지 설정</h3>
+                        <div class="setting-item">
+                            <label for="winMessage">당첨 메시지:</label>
+                            <input type="text" id="winMessage" value="🎉 축하합니다! 🎉" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 추첨 페이지 -->
+            <section id="drawingPage" class="page">
+                <div class="drawing-container">
+                    <div class="prize-display">
+                        <h2 id="currentPrize">상품명</h2>
+                    </div>
+                    
+                    <div class="rolling-display">
+                        <div id="rollingText" class="rolling-text">참가자</div>
+                    </div>
+                    
+                    <div class="draw-controls">
+                        <button id="drawBtn" class="draw-button">🎲 추첨하기</button>
+                        <button id="backBtn" class="back-button">← 설정으로 돌아가기</button>
+                    </div>
+                    
+                    <div id="resultDisplay" class="result-display hidden">
+                        <div class="result-content">
+                            <div id="winnerMessage" class="winner-message"></div>
+                            <div id="winnerName" class="winner-name"></div>
+                            <button id="nextDrawBtn" class="next-draw-btn">다음 추첨</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html> 
