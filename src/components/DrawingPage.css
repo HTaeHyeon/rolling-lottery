@@ -1,0 +1,419 @@
+.drawing-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.drawing-container {
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.prize-display {
+  margin-bottom: 60px;
+}
+
+.prize-display h2 {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.prize-info {
+  font-size: 18px;
+  opacity: 0.8;
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.rolling-display {
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.rolling-container-inner {
+  border: 4px solid;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.rolling-viewport {
+  width: 400px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.rolling-list {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translateY(0);
+  --final-position: 0px;
+}
+
+.rolling-list.rolling {
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+}
+
+/* 부드러운 스크롤 애니메이션 - CSS 변수 사용 */
+@keyframes smoothRolling {
+  0% {
+    transform: translateY(0);
+  }
+  85% {
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  95% {
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  100% {
+    transform: translateY(var(--final-position));
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+}
+
+.rolling-item {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  padding: 0 20px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* 중앙 하이라이트 효과만 유지 */
+.rolling-viewport::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 20%,
+    transparent 30%,
+    transparent 70%,
+    rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.draw-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.draw-button {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 20px 40px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.draw-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.draw-button:active {
+  transform: translateY(-2px);
+}
+
+.rolling-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.rolling-status p {
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.result-display {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.result-content {
+  text-align: center;
+  background: white;
+  padding: 60px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.winner-message {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.winner-name {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.winner-prize {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.result-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.next-draw-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.next-draw-btn:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(40, 167, 69, 0.3);
+}
+
+.roll-again-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.roll-again-btn:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(108, 117, 125, 0.3);
+}
+
+.error-message {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 60px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.error-message h2 {
+  color: #dc3545;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.error-message p {
+  color: #6c757d;
+  font-size: 18px;
+  margin-bottom: 32px;
+}
+
+.error-message .back-button {
+  background: #667eea;
+  color: white;
+  border: none;
+}
+
+.error-message .back-button:hover {
+  background: #5a67d8;
+}
+
+@media (max-width: 768px) {
+  .drawing-page {
+    padding: 16px;
+  }
+
+  .prize-display h2 {
+    font-size: 32px;
+  }
+
+  .prize-info {
+    font-size: 16px;
+  }
+
+  .rolling-viewport {
+    width: 300px;
+    height: 60px;
+  }
+
+  .rolling-item {
+    height: 60px;
+    font-size: 24px;
+    padding: 0 16px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .draw-button {
+    font-size: 20px;
+    padding: 16px 32px;
+  }
+
+  .result-content {
+    padding: 40px 30px;
+  }
+
+  .winner-message {
+    font-size: 24px;
+  }
+
+  .winner-name {
+    font-size: 36px;
+  }
+
+  .winner-prize {
+    font-size: 18px;
+  }
+
+  .result-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .next-draw-btn,
+  .roll-again-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .error-message {
+    padding: 40px 30px;
+  }
+
+  .error-message h2 {
+    font-size: 24px;
+  }
+
+  .error-message p {
+    font-size: 16px;
+  }
+
+  /* 모바일에서 애니메이션 - CSS 변수 사용 */
+  @keyframes smoothRolling {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(var(--final-position));
+    }
+  }
+}
